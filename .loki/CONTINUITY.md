@@ -1,18 +1,17 @@
 # Loki Mode Continuity Log
 
 ## Current State
-**Phase:** Implementation
-**Status:** Architecture Verification (TUI Integration)
-**Active Agent:** Developer (Sonnet)
+**Phase:** Core Development Loop
+**Status:** Implementing Planner Hat
+**Active Agent:** Orchestrator (Loki)
 
 ## Immediate Plan (RARV)
-1.  [x] **Reason:** Go binary missing & Winget failed (UAC).
-2.  [x] **Act:** Install Portable Go (.loki/tools/go).
-3.  [x] **Act:** Configure `go mod` and `go build` (Success).
-4.  [x] **Task 1.1:** Project Init Complete.
-5.  [x] **Task 1.2:** FSM Core Complete.
-6.  [ ] **Act:** Integrate TUI (Task 3.1) into `main.go`.
-7.  [ ] **Verify:** Run Ralph2 TUI.
+1.  [x] **Foundation:** CLI, TUI, FSM, EventBus, Sandbox built & verified.
+2.  [x] **Setup:** Environment healed (Portable Go + Downgrade).
+3.  [ ] **Reason:** Need autonomous planning capability.
+4.  [ ] **Act:** Implement `SimplePlanner` (Heuristic/Mock).
+5.  [ ] **Act:** Wire Planner to FSM in `main.go`.
+6.  [ ] **Verify:** Run `ralph2 -p "Hello World"` and see Plan generated.
 
 ## Mistakes & Learnings
 *   **Env:** Assumed Go was installed. Check prereqs first next time.
