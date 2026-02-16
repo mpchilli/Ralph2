@@ -28,6 +28,26 @@ func (eb *EventBus) Subscribe(topic string) <-chan Event {
 	return ch
 }
 
+func (eb *EventBus) Unsubscribe(ch <-chan Event) {
+	eb.mu.Lock()
+	defer eb.mu.Unlock()
+
+	for topic, chans := range eb.subscribers {
+		for i, subCh := range chans {
+			if subCh == ch {
+				// Remove channel from slice
+				eb.subscribers[topic] = append(chans[:i], chans[i+1:]...)
+				// Consider if we should close here. 
+				// Closing might be safer for range loops on the consumer side.
+				// However, since Subscribe returns <-chan, we need to cast to chan to close?
+				// Actually, the stored type is `chan Event`, so we can close it.
+				close(subCh)
+				return
+			}
+		}
+	}
+}
+
 func (eb *EventBus) Publish(topic string, payload interface{}) {
 	eb.mu.RLock()
 	defer eb.mu.RUnlock()

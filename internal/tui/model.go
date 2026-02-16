@@ -11,18 +11,25 @@ type Model struct {
 	State    core.FSMState
 	Messages []string
 	EventBus *utils.EventBus
+	sub      <-chan utils.Event
 }
 
-func NewModel(bus *utils.EventBus) Model {
+func NewModel(bus *utils.EventBus, initialState core.FSMState) Model {
 	return Model{
-		State:    core.StatePlanning,
+		State:    initialState,
 		EventBus: bus,
+		sub:      bus.Subscribe("state_change"),
 	}
 }
 
 func (m Model) Init() tea.Cmd {
-	// Subscribe to events (TODO: Actual tea.Cmd to listen to channel)
-	return nil
+	return waitForEvent(m.sub)
+}
+
+func waitForEvent(sub <-chan utils.Event) tea.Cmd {
+	return func() tea.Msg {
+		return <-sub
+	}
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -31,6 +38,16 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if msg.String() == "q" || msg.String() == "ctrl+c" {
 			return m, tea.Quit
 		}
+	case tea.WindowSizeMsg:
+		// Handle window resize if needed (e.g., update layout dimensions)
+		return m, nil
+	case utils.Event:
+		if msg.Topic == "state_change" {
+			if newState, ok := msg.Payload.(core.FSMState); ok {
+				m.State = newState
+			}
+		}
+		return m, waitForEvent(m.sub)
 	}
 	return m, nil
 }

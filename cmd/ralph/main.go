@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
 	"ralph2/internal/core"
-	"ralph2/internal/tui"
 	"ralph2/pkg/utils"
 )
 
@@ -28,31 +26,25 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.Flags().StringVarP(&complexity, "complexity", "c", "streamlined", "Complexity mode: fast, streamlined, full")
 	rootCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "Initial prompt for the task")
+	rootCmd.AddCommand(tuiCmd)
 }
 
 func runOrchestrator() {
 	fmt.Printf("Initializing Ralph 2.1 with Complexity: %s\n", complexity)
 	
-	// Init EventBus
-	bus := utils.NewEventBus()
-	
-	// Init FSM
-	fsm := core.NewStateManager()
-	fsm.TransitionTo(core.StatePlanning)
-	
 	if prompt != "" {
+		// Init EventBus
+		bus := utils.NewEventBus()
+		
+		// Init FSM with EventBus
+		fsm := core.NewStateManager(bus)
+		fsm.TransitionTo(core.StatePlanning)
+		
 		fmt.Printf("Received Prompt: %q\n", prompt)
 		// Trigger One-Shot Logic here
 	} else {
 		fmt.Println("No prompt provided. Entering Interactive Mode (TUI)...")
-		
-		// Init TUI
-		model := tui.NewModel(bus)
-		p := tea.NewProgram(model)
-		if _, err := p.Run(); err != nil {
-			fmt.Printf("Alas, there's been an error: %v", err)
-			os.Exit(1)
-		}
+		startTUI()
 	}
 }
 

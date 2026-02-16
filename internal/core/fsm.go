@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"sync"
+	"ralph2/pkg/utils"
 )
 
 // FSMState represents the state of the orchestrator
@@ -17,32 +18,18 @@ const (
 	StateFailed     FSMState = "FAILED"
 )
 
-// EventType for the EventBus
-type EventType string
-
-const (
-	EventStateChange EventType = "state_change"
-	EventLog         EventType = "log"
-)
-
-// Event represents a system event
-type Event struct {
-	Type    EventType
-	Payload interface{}
-}
-
 // StateManager handles the FSM
 type StateManager struct {
 	CurrentState FSMState
 	mu           sync.RWMutex
-	eventChan    chan Event
+	bus          *utils.EventBus
 }
 
 // NewStateManager creates a new FSM
-func NewStateManager() *StateManager {
+func NewStateManager(bus *utils.EventBus) *StateManager {
 	return &StateManager{
 		CurrentState: StatePlanning,
-		eventChan:    make(chan Event, 100),
+		bus:          bus,
 	}
 }
 
@@ -56,10 +43,9 @@ func (sm *StateManager) TransitionTo(newState FSMState) error {
 	
 	sm.CurrentState = newState
 	
-	// Broadcast
-	sm.eventChan <- Event{
-		Type:    EventStateChange,
-		Payload: newState,
+	// Broadcast via EventBus
+	if sm.bus != nil {
+		sm.bus.Publish("state_change", newState)
 	}
 	
 	return nil
