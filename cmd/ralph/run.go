@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"ralph2/internal/core"
+	"ralph2/internal/git"
 	"ralph2/internal/planner"
 	"ralph2/pkg/utils"
 )
@@ -36,6 +37,24 @@ func executeRun(p string, c string) {
 	fmt.Printf("🚀 Starting Ralph2 with prompt: %q\n", p)
 	fmt.Printf("Complexity: %s\n", c)
 
+	// Step 0: Git Isolation Check
+	isDirty, err := git.CheckDirty()
+	if err != nil {
+		fmt.Printf("Error checking git status: %v\n", err)
+		os.Exit(1)
+	}
+	if isDirty {
+		fmt.Println("❌ Error: Working tree is dirty. Please commit or stash changes before running.")
+		os.Exit(1)
+	}
+
+	branch, err := git.CreateTaskBranch()
+	if err != nil {
+		fmt.Printf("Error creating task branch: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("🌿 Switched to task branch: %s\n", branch)
+
 	bus := utils.NewEventBus()
 	sm := core.NewStateManager(bus)
 
@@ -60,6 +79,11 @@ func executeRun(p string, c string) {
 	}
 
 	fmt.Println("Plan generated successfully in spec.md")
+
+	// Commit Plan
+	if err := git.CommitChanges(fmt.Sprintf("docs: generated plan for %q", p)); err != nil {
+		fmt.Printf("Warning: Failed to commit plan: %v\n", err)
+	}
 
 	// Move to building
 	_ = sm.TransitionTo(core.StateBuilding)
