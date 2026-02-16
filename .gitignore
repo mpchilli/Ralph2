@@ -15,6 +15,9 @@ desktop.ini
 .roo/
 .kilocode/
 .opencode/
+.loki/
+
+
 
 # Project specific outputs
 _bmad-output/

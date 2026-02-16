@@ -2,16 +2,18 @@
 
 ## Current State
 **Phase:** Implementation
-**Status:** Working on Task 1.1 (Project Init)
+**Status:** Architecture Verification (TUI Integration)
 **Active Agent:** Developer (Sonnet)
 
 ## Immediate Plan (RARV)
-1.  [x] **Reason:** Queue populated. Claiming Task 1.1.
-2.  [ ] **Act:** `go mod init ralph2`.
-3.  [ ] **Act:** Create directory structure.
-4.  [ ] **Act:** Implement `cmd/ralph/main.go` and `cmd/root.go`.
-5.  [ ] **Reflect:** Check file system.
-6.  [ ] **Verify:** `go build`.
+1.  [x] **Reason:** Go binary missing & Winget failed (UAC).
+2.  [x] **Act:** Install Portable Go (.loki/tools/go).
+3.  [x] **Act:** Configure `go mod` and `go build` (Success).
+4.  [x] **Task 1.1:** Project Init Complete.
+5.  [x] **Task 1.2:** FSM Core Complete.
+6.  [ ] **Act:** Integrate TUI (Task 3.1) into `main.go`.
+7.  [ ] **Verify:** Run Ralph2 TUI.
 
 ## Mistakes & Learnings
-*   (None yet)
+*   **Env:** Assumed Go was installed. Check prereqs first next time.
+*   **Env:** Winget requires Admin. Use Portable Zip for autonomy.
