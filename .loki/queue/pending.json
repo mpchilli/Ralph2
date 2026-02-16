@@ -3,24 +3,16 @@
     "id": "TASK-1.1",
     "type": "setup",
     "priority": "critical",
-    "description": "Initialize Project: Go Mod 'ralph2', Standard Layout (cmd/, internal/pkg/), Cobra CLI init.",
-    "status": "pending",
+    "description": "Initialize Project: Go Mod 'ralph2', Standard Layout.",
+    "status": "completed",
     "dependencies": []
   },
   {
     "id": "TASK-1.2",
     "type": "dev",
     "priority": "high",
-    "description": "Implement Core FSM (internal/core/fsm.go) with states: PLANNING, BUILDING, VERIFYING.",
-    "status": "pending",
-    "dependencies": ["TASK-1.1"]
-  },
-  {
-    "id": "TASK-4.1",
-    "type": "dev",
-    "priority": "high",
-    "description": "Implement Windows Job Object Sandbox (internal/sandbox).",
-    "status": "pending",
+    "description": "Implement Core FSM.",
+    "status": "completed",
     "dependencies": ["TASK-1.1"]
   },
   {
@@ -28,7 +20,7 @@
     "type": "dev",
     "priority": "medium",
     "description": "Implement CLI Shell & Complexity Flag.",
-    "status": "pending",
+    "status": "completed",
     "dependencies": ["TASK-1.1", "TASK-1.2"]
   },
   {
@@ -36,6 +28,30 @@
     "type": "dev",
     "priority": "medium",
     "description": "Implement Bubble Tea TUI Skeleton.",
+    "status": "completed",
+    "dependencies": ["TASK-1.3"]
+  },
+  {
+    "id": "TASK-3.2",
+    "type": "dev",
+    "priority": "medium",
+    "description": "Implement Web Dashboard Server (SSE).",
+    "status": "completed",
+    "dependencies": ["TASK-3.1"]
+  },
+  {
+    "id": "TASK-4.1",
+    "type": "dev",
+    "priority": "high",
+    "description": "Implement Windows Job Object Sandbox.",
+    "status": "pending",
+    "dependencies": ["TASK-1.1"]
+  },
+  {
+    "id": "TASK-2.1",
+    "type": "dev",
+    "priority": "high",
+    "description": "Implement Planner Hat Logic (spec.md generation).",
     "status": "pending",
     "dependencies": ["TASK-1.3"]
   }

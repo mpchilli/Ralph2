@@ -18,9 +18,19 @@ const (
 	StateFailed     FSMState = "FAILED"
 )
 
+// ComplexityLevel represents the depth of the loop
+type ComplexityLevel string
+
+const (
+	ComplexityFast        ComplexityLevel = "fast"
+	ComplexityStreamlined ComplexityLevel = "streamlined"
+	ComplexityFull        ComplexityLevel = "full"
+)
+
 // StateManager handles the FSM
 type StateManager struct {
 	CurrentState FSMState
+	Complexity   ComplexityLevel
 	mu           sync.RWMutex
 	bus          *utils.EventBus
 }
@@ -29,8 +39,16 @@ type StateManager struct {
 func NewStateManager(bus *utils.EventBus) *StateManager {
 	return &StateManager{
 		CurrentState: StatePlanning,
+		Complexity:   ComplexityStreamlined,
 		bus:          bus,
 	}
+}
+
+// SetComplexity updates the complexity level
+func (sm *StateManager) SetComplexity(level ComplexityLevel) {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	sm.Complexity = level
 }
 
 // TransitionTo changes state safely
