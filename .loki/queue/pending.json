@@ -1,0 +1,42 @@
+[
+  {
+    "id": "TASK-1.1",
+    "type": "setup",
+    "priority": "critical",
+    "description": "Initialize Project: Go Mod 'ralph2', Standard Layout (cmd/, internal/pkg/), Cobra CLI init.",
+    "status": "pending",
+    "dependencies": []
+  },
+  {
+    "id": "TASK-1.2",
+    "type": "dev",
+    "priority": "high",
+    "description": "Implement Core FSM (internal/core/fsm.go) with states: PLANNING, BUILDING, VERIFYING.",
+    "status": "pending",
+    "dependencies": ["TASK-1.1"]
+  },
+  {
+    "id": "TASK-4.1",
+    "type": "dev",
+    "priority": "high",
+    "description": "Implement Windows Job Object Sandbox (internal/sandbox).",
+    "status": "pending",
+    "dependencies": ["TASK-1.1"]
+  },
+  {
+    "id": "TASK-1.3",
+    "type": "dev",
+    "priority": "medium",
+    "description": "Implement CLI Shell & Complexity Flag.",
+    "status": "pending",
+    "dependencies": ["TASK-1.1", "TASK-1.2"]
+  },
+  {
+    "id": "TASK-3.1",
+    "type": "dev",
+    "priority": "medium",
+    "description": "Implement Bubble Tea TUI Skeleton.",
+    "status": "pending",
+    "dependencies": ["TASK-1.3"]
+  }
+]
