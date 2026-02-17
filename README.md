@@ -9,13 +9,15 @@ Ralph2 is a Go-based CLI that breaks a coding task into phases (Plan → Build �
 ## Table of Contents
 
 1. [Why Ralph2?](#why-ralph2)
-2. [Getting Started](#getting-started)
-3. [Commands & Workflows](#commands--workflows)
-4. [Architecture](#architecture)
-5. [Lifecycle Diagram](#lifecycle-diagram)
-6. [Advanced Internals](#advanced-internals)
-7. [Extending Ralph2](#extending-ralph2)
-8. [Project Cleanup Log](#project-cleanup-log)
+2. [Dummies Guide: How Ralph2 Works](#dummies-guide-how-ralph2-works)
+3. [Getting Started](#getting-started)
+4. [First-Time Walkthrough: Your First Feature](#first-time-walkthrough-your-first-feature)
+5. [Commands & Workflows](#commands--workflows)
+6. [Architecture](#architecture)
+7. [Lifecycle Diagram](#lifecycle-diagram)
+8. [Advanced Internals](#advanced-internals)
+9. [Extending Ralph2](#extending-ralph2)
+10. [Project Cleanup Log](#project-cleanup-log)
 
 ---
 
@@ -28,6 +30,19 @@ Most AI coding tools run in a single pass — prompt in, code out. Ralph2 adds *
 - **Loop Detection** — The LoopGuardian catches repeated failures and breaks the cycle before it burns tokens.
 - **Sandbox** — On Windows, child processes run inside a Job Object that limits CPU, memory, and prevents runaways.
 - **Multi-Interface** — CLI, TUI (Bubble Tea), Web Dashboard (SSE), and MCP Server (for Cursor/Claude Code).
+
+---
+
+## Dummies Guide: How Ralph2 Works
+
+Think of Ralph2 as a **Senior Developer in a Box**. When you give it a task, it doesn't just start typing. It follows a strict process to ensure quality:
+
+1.  **Planning:** It analyzes your request and the existing code to create a technical specification (`spec.md`).
+2.  **Building:** It implements the code changes in a safe, isolated environment.
+3.  **Verifying:** It runs tests and linting to make sure everything works perfectly.
+4.  **Reporting:** It shows you exactly what it did via a real-time Dashboard or Terminal UI.
+
+---
 
 ---
 
@@ -72,6 +87,56 @@ go build -o ralph2.exe ./cmd/ralph
 | `fast` | Quick scaffolding, single-file changes |
 | `streamlined` | Default. Multi-file features with basic verification |
 | `full` | Production features with thorough testing |
+
+---
+
+## First-Time Walkthrough: Your First Feature
+
+Let's build a simple **CLI Calculator** using Ralph2 to see it in action.
+
+### 1. Setup a Workspace
+Create a new directory and initialize a git repository (Ralph2 requires Git to isolate its work):
+```bash
+mkdir my-calc && cd my-calc
+git init
+```
+
+### 2. Give Ralph2 its first Mission
+Run the following command to bootstrap your project. We'll use `--complexity fast` for a quick result:
+```bash
+ralph2 run --prompt "Create a basic Go CLI calculator that adds and subtracts numbers" --complexity fast
+```
+
+### 3. Watch the Magic Happen
+While Ralph2 is working, you can monitor it in real-time:
+- **Terminal UI (TUI):** In a second terminal window, run `./ralph2.exe tui`. You'll see the state change from `PLANNING` to `BUILDING` to `VERIFYING`.
+- **Web Dashboard:** Alternatively, run `./ralph2.exe dashboard` and open `http://localhost:8080` in your browser.
+
+### 4. Inspect the Result
+Ralph2 automatically creates a new git branch for the task so it doesn't mess up your `main` branch. Once it says "Task Completed":
+```bash
+# See the new branch created by Ralph
+git branch 
+
+# Switch to the task branch to see the code
+git checkout ralph/task-...
+
+# Look at your new calculator!
+ls
+cat main.go
+```
+
+### 5. Verify & Merge
+Test your new calculator and then merge it back to your main project:
+```bash
+go run . 10 + 5
+# Outputs: 15
+
+git checkout main
+git merge ralph/task-...
+```
+
+---
 
 ---
 
