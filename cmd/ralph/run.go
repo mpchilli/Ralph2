@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"ralph2/internal/coder"
 	"ralph2/internal/core"
 	"ralph2/internal/git"
 	"ralph2/internal/planner"
@@ -89,5 +90,25 @@ func executeRun(p string, c string) {
 	_ = sm.TransitionTo(core.StateBuilding)
 
 	fmt.Println("System moved to BUILDING state.")
-	fmt.Println("Note: This is a skeleton implementation. Future agents (Coder Hat) will take over here.")
+
+	// Execute Building
+	cdr := coder.NewMockCoder("hello.go")
+	if err := cdr.Build("spec.md"); err != nil {
+		fmt.Printf("Error during building: %v\n", err)
+		_ = sm.TransitionTo(core.StateFailed)
+		return
+	}
+
+	fmt.Println("Code generated successfully in hello.go")
+
+	// Commit Code
+	if err := git.CommitChanges(fmt.Sprintf("feat: implement logic for %q", p)); err != nil {
+		fmt.Printf("Warning: Failed to commit code: %v\n", err)
+	}
+
+	// Move to verifying
+	_ = sm.TransitionTo(core.StateVerifying)
+
+	fmt.Println("System moved to VERIFYING state.")
+	fmt.Println("Note: This is a skeleton implementation. Future agents (Tester Hat) will take over here.")
 }

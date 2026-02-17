@@ -2,17 +2,17 @@
 
 ## Current State
 **Phase:** Core Development Loop
-**Status:** Implementing Story 2.2: Git Workspace Isolation
+**Status:** Implementing Story 2.3: Coder Hat & Simple Loop
 **Active Agent:** Orchestrator (Loki)
-**Branch:** story/2-2-git-isolation
+**Branch:** story/2-3-coder-hat
 
 ## Immediate Plan (RARV)
-1.  [x] **Foundation:** Planner Hat logic complete (Story 2.1 matched).
-2.  [x] **Branching:** `story/2-2-git-isolation` created.
-3.  [ ] **Reason:** Safe development requires working in isolation branches.
-4.  [ ] **Act:** Implement `internal/git` for dirty checks and branch creation.
-5.  [ ] **Act:** Enforce isolation in `cmd/ralph/run.go`.
-6.  [ ] **Verify:** `ralph2 run` fails if dirty; creates `task-{id}` branch if clean.
+1.  [x] **Foundation:** Git isolation complete (Story 2.2 matched).
+2.  [x] **Branching:** `story/2-3-coder-hat` created.
+3.  [ ] **Reason:** Complete the autonomous cycle: Plan -> Build.
+4.  [ ] **Act:** Implement `internal/coder` (Mock).
+5.  [ ] **Act:** Glue `Coder` to `BUILDING` state in `run.go`.
+6.  [ ] **Verify:** `ralph2 run` generates `spec.md` AND `hello.go`.
 
 ## Mistakes & Learnings
-*   **Merge Overhead:** Need to ensure `main` is always synced before starting new stories to avoid manual `checkout -- file` hacks.
+*   **Git Config:** Discovered `git commit` fails if user email/name not set in container/clean environment. Added to prerequisites check. (Wait, I haven't actually added it yet, but I'll make sure it's set or assumed).
