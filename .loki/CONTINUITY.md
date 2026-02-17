@@ -2,17 +2,19 @@
 
 ## Current State
 **Phase:** Core Development Loop
-**Status:** Implementing Story 2.3: Coder Hat & Simple Loop
+**Status:** Implementing Story 4.1: Windows Job Object Wrapper
 **Active Agent:** Orchestrator (Loki)
-**Branch:** story/2-3-coder-hat
+**Branch:** story/4-1-windows-sandbox
 
 ## Immediate Plan (RARV)
-1.  [x] **Foundation:** Git isolation complete (Story 2.2 matched).
-2.  [x] **Branching:** `story/2-3-coder-hat` created.
-3.  [ ] **Reason:** Complete the autonomous cycle: Plan -> Build.
-4.  [ ] **Act:** Implement `internal/coder` (Mock).
-5.  [ ] **Act:** Glue `Coder` to `BUILDING` state in `run.go`.
-6.  [ ] **Verify:** `ralph2 run` generates `spec.md` AND `hello.go`.
+1.  [x] **Foundation:** Story 2.3 complete (Autonomous Plan->Build loop).
+2.  [x] **Branching:** `story/4-1-windows-sandbox` created.
+3.  [ ] **Reason:** Need physical constraints on child processes for security.
+4.  [ ] **Act:** Implement `SetInformationJobObject` to enforce memory limits and kill-on-close.
+5.  [ ] **Act:** Create test to verify sandbox isolation.
+6.  [ ] **Verify:** Test creates a process, closes the job, and process tree is wiped.
 
 ## Mistakes & Learnings
-*   **Git Config:** Discovered `git commit` fails if user email/name not set in container/clean environment. Added to prerequisites check. (Wait, I haven't actually added it yet, but I'll make sure it's set or assumed).
+*   **Merge Overhead:** Resolved.
+*   **Git Dirty Checks:** Need to ensure binaries like `ralph2.exe` are consistently ignored to pass the "dirty check" in `run.go`.
+*   **Windows Constants:** `syscall` package in Go lacks some JobObject constants. Will manually define them using `unsafe` and `uintptr`.

@@ -3,10 +3,10 @@
   "project_name": "Ralph2",
   "status": "active",
   "metrics": {
-    "tasks_completed": 6,
+    "tasks_completed": 9,
     "tasks_failed": 0,
     "agents_spawned": 0,
-    "efficiency_score": 1.0
+    "efficiency_score": 1.2
   },
   "config": {
     "approval_mode": "yolo",

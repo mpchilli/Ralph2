@@ -32,6 +32,22 @@
     "dependencies": ["TASK-1.3"]
   },
   {
+    "id": "TASK-2.2",
+    "type": "dev",
+    "priority": "high",
+    "description": "Git Workspace Isolation (Branching logic).",
+    "status": "completed",
+    "dependencies": ["TASK-2.1"]
+  },
+  {
+    "id": "TASK-2.3",
+    "type": "dev",
+    "priority": "high",
+    "description": "Implement Coder Hat & Simple Loop.",
+    "status": "completed",
+    "dependencies": ["TASK-2.2"]
+  },
+  {
     "id": "TASK-3.1",
     "type": "dev",
     "priority": "medium",
@@ -48,11 +64,19 @@
     "dependencies": ["TASK-3.1"]
   },
   {
-    "id": "TASK-2.2",
+    "id": "TASK-4.1",
     "type": "dev",
     "priority": "high",
-    "description": "Git Workspace Isolation (Branching logic).",
+    "description": "Implement Windows Job Object Sandbox.",
+    "status": "completed",
+    "dependencies": ["TASK-1.1"]
+  },
+  {
+    "id": "TASK-4.2",
+    "type": "dev",
+    "priority": "medium",
+    "description": "Implement LoopGuardian Logic.",
     "status": "in-progress",
-    "dependencies": ["TASK-2.1"]
+    "dependencies": ["TASK-4.1"]
   }
 ]
