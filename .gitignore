@@ -10,7 +10,7 @@ desktop.ini
 *.swo
 
 # AI Tools / Temp context
-#.agent/
+.archive/
 .gemini/
 .roo/
 .kilocode/
