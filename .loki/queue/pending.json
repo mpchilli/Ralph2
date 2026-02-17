@@ -76,7 +76,15 @@
     "type": "dev",
     "priority": "medium",
     "description": "Implement LoopGuardian Logic.",
-    "status": "in-progress",
+    "status": "completed",
     "dependencies": ["TASK-4.1"]
+  },
+  {
+    "id": "TASK-5.1",
+    "type": "dev",
+    "priority": "high",
+    "description": "Implement MCP Server Basic Logic.",
+    "status": "in-progress",
+    "dependencies": ["TASK-1.3"]
   }
 ]

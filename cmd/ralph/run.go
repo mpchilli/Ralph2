@@ -110,5 +110,14 @@ func executeRun(p string, c string) {
 	_ = sm.TransitionTo(core.StateVerifying)
 
 	fmt.Println("System moved to VERIFYING state.")
+
+	// Simulated loop check
+	lg := core.NewLoopGuardian()
+	if isLoop, _ := lg.RecordFailure("simulated error"); isLoop {
+		fmt.Println("🛑 Loop detection triggered!")
+	} else {
+		fmt.Println("✅ No infinite loops detected.")
+	}
+
 	fmt.Println("Note: This is a skeleton implementation. Future agents (Tester Hat) will take over here.")
 }
